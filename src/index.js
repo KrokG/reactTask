@@ -42,9 +42,6 @@ function app(){
 	ReactDOM.render((
 		<BrowserRouter>
 			<Page page={page}/>
-			<Switch>
-				<Route exact path="/home" component={home} />
-			</Switch>
 		</BrowserRouter>
 	), document.getElementById('root'))
 }
