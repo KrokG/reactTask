@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 let page = 1; 
 
@@ -14,8 +14,6 @@ function Page(props){
 	}
 }
 
-//
-
 function creatMain(){
 	return (
 		<div>
@@ -25,18 +23,41 @@ function creatMain(){
 	)
 }
 
-//
+const Type1 = () => (
+	<h1>Type1</h1>
+)
+
+const Type2 = () => (
+	<h2>Type2</h2>
+)
+
+const Type3 = () => (
+	<h3>Type 3</h3>
+)
+
+const Type4 = () => (
+	<h5>Type4</h5>
+)
 
 function creatSlider(){
 	return (
 		<div>
-			<h1>creatSlider</h1>
-			<button>main</button>
+			<Switch>
+				<Route path='/Type1' component={Type1}/>
+				<Route path='/Type2' component={Type2}/>
+				<Route path='/Type3' component={Type3}/>
+				<Route path='/Type4' component={Type4}/>
+			</Switch>
+			<button>back</button>
+			<ul>
+				<li><Link to='/Type1'>Type1</Link></li>
+				<li><Link to='/Type2'>Tipe 2</Link></li>
+				<li><Link to='/Type3'>type3</Link></li>
+				<li><Link to='/Type4'>type 4</Link></li>
+			</ul>
 		</div>
 	)
 }
-
-//
 
 function app(){
 	ReactDOM.render((
@@ -45,8 +66,6 @@ function app(){
 		</BrowserRouter>
 	), document.getElementById('root'))
 }
-
-//
 
 app();
 
@@ -62,3 +81,6 @@ btn.onclick = function(event){
 		app();
 	}
 }
+
+
+
