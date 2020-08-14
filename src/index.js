@@ -13,9 +13,9 @@ const MainWin = () => (
 
 const Slider = () => (
 	<div className='win-slider__slider'>
-		<button>back</button>
+		<button onClick={slideBack}>back</button>
 		<img id='picture' className='slider__picture-box'/>
-		<button>next</button>
+		<button onClick={slideNext}>next</button>
 	</div>
 )
 
@@ -65,14 +65,48 @@ ReactDOM.render((
 );
 
 
+let picture_save =  new Array();
+let allImg = 0;
+let indPic = 0;
+
 function GetImg(){
 	console.log('get img');
 	let pictureBox = document.getElementById('picture');
 
 	let files = document.querySelector('input[type=file]').files;
 	let reader =  new FileReader();
-	reader.readAsDataURL(files[0]);
+
+	let countImg = files.length;
+	allImg += countImg;
+	indPic += countImg-1;
+	let indexImg = countImg - 1;
+	reader.readAsDataURL(files[indexImg]);
+
+
 	reader.onloadend = function(event){
 		pictureBox.src = reader.result;
+		picture_save.push(pictureBox.src);
+		indexImg--;
+		if(indexImg >= 0 ){
+			reader.readAsDataURL(files[indexImg]);
+		}
 	}
+}
+
+function slideBack(){
+	let pictureBox = document.getElementById('picture');
+	indPic--;
+	if(indPic < 0){
+		indPic = allImg - 1;
+	}
+	pictureBox.src = picture_save[indPic]
+}
+
+function slideNext(){
+	let pictureBox = document.getElementById('picture');
+	indPic++;
+	if(indPic >= allImg){
+		indPic = 0;
+	}
+	pictureBox.src = picture_save[indPic]
 }
