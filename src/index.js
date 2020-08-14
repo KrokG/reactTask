@@ -4,83 +4,75 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
-let page = 1; 
+const MainWin = () => (
+	<div className='app__main-win'>
+		<div className='main-win__text'>Welcom to page</div>
+		<Link to='/Slider'><div className='main-win__button'>slider</div></Link>
+	</div>
+)
 
-function Page(props){
-	switch(props.page){
-		case 0: return creatMain();
-		case 1: return creatSlider();
-		default: return <h1>400 not found</h1>
+const Slider = () => (
+	<div className='win-slider__slider'>
+		<button>back</button>
+		<img id='picture' className='slider__picture-box'/>
+		<button>next</button>
+	</div>
+)
+
+const MenuAddFile = () => (
+	<div>
+		<input type='File' multiple={true} onChange={GetImg}/>
+	</div>
+)
+
+const SlideMode = () => (
+	<div className='win-slider__slide-mode'>
+		<Link to='/Slider/server'><div className='slide-mode__button'>server </div></Link>
+		<Link to='/Slider/local'><div className='slide-mode__button'>local</div></Link>
+		<Switch>
+			<Route path='/Slider/local' component={MenuAddFile} />
+		</Switch>
+	</div>
+)
+
+const winSlider = () => (
+	<div className='app__win-slider'>
+		<Slider/>
+		<SlideMode/>
+		<Link to='/'><div className='win-slider__button'>back</div></Link>
+	</div>
+)
+
+class App extends React.Component{
+	render(){
+		return(
+			<div>
+				<Switch>
+					<Route exact path='/' component={MainWin} />
+					<Route path='/Slider' component={winSlider} />
+				</Switch>
+			</div>
+		);
 	}
 }
-
-function creatMain(){
-	return (
-		<div>
-			<h1>Welcom to page</h1>
-			<button>slider</button>
-		</div>
-	)
-}
-
-const Type1 = () => (
-	<h1>Type1</h1>
-)
-
-const Type2 = () => (
-	<h2>Type2</h2>
-)
-
-const Type3 = () => (
-	<h3>Type 3</h3>
-)
-
-const Type4 = () => (
-	<h5>Type4</h5>
-)
-
-function creatSlider(){
-	return (
-		<div>
-			<Switch>
-				<Route path='/Type1' component={Type1}/>
-				<Route path='/Type2' component={Type2}/>
-				<Route path='/Type3' component={Type3}/>
-				<Route path='/Type4' component={Type4}/>
-			</Switch>
-			<button>back</button>
-			<ul>
-				<li><Link to='/Type1'>Type1</Link></li>
-				<li><Link to='/Type2'>Tipe 2</Link></li>
-				<li><Link to='/Type3'>type3</Link></li>
-				<li><Link to='/Type4'>type 4</Link></li>
-			</ul>
-		</div>
-	)
-}
-
-function app(){
-	ReactDOM.render((
+  
+ReactDOM.render((
 		<BrowserRouter>
-			<Page page={page}/>
+			<App />
 		</BrowserRouter>
-	), document.getElementById('root'))
-}
+	),
+	document.getElementById('root')
+);
 
-app();
 
-let btn = document.getElementsByTagName('button')[0];
-console.log(btn);
-btn.onclick = function(event){
-	console.log('click');
-	if(page === 1){
-		page = 0;
-		app();
-	} else if(page === 0){
-		page = 1;
-		app();
+function GetImg(){
+	console.log('get img');
+	let pictureBox = document.getElementById('picture');
+
+	let files = document.querySelector('input[type=file]').files;
+	let reader =  new FileReader();
+	reader.readAsDataURL(files[0]);
+	reader.onloadend = function(event){
+		pictureBox.src = reader.result;
 	}
 }
-
-
-
