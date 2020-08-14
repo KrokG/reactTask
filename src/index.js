@@ -80,9 +80,9 @@ function GetImg(){
 	allImg += countImg;
 	indPic += countImg-1;
 	let indexImg = countImg - 1;
-	reader.readAsDataURL(files[indexImg]);
-
-
+	if(files.length > 0){
+		reader.readAsDataURL(files[indexImg]);
+	}
 	reader.onloadend = function(event){
 		pictureBox.src = reader.result;
 		picture_save.push(pictureBox.src);
