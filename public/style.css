@@ -49,10 +49,17 @@
 	display: flex;
 	justify-content: space-between;
 }
+.slider__slide{
+  width: 420px;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
 
 .slider__picture-box{
-	width: 420px;
-	object-fit: contain;
+  margin: auto;
+  max-width: 420px;
+  max-height: 300px;
 }
 
 .win-slider__button{
